@@ -7,6 +7,7 @@ export default function WelcomeScreen() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [scooterPosition, setScooterPosition] = useState(0);
 
   // Simulate loading progress
   useEffect(() => {
@@ -27,100 +28,35 @@ export default function WelcomeScreen() {
     return () => clearInterval(interval);
   }, [isLoading]);
 
+  // Update scooter position based on progress
+  useEffect(() => {
+    setScooterPosition(progress);
+  }, [progress]);
+
   const handleGetStarted = () => {
     router.push('/onboarding-survey');
   };
 
   return (
     <div
-      className="flex flex-col h-screen items-center justify-center relative overflow-hidden"
+      className="flex flex-col h-screen relative overflow-hidden"
       style={{ background: '#0D0F12', maxWidth: 430, margin: '0 auto' }}
     >
-      {/* Background gradient accent */}
+      {/* Subtle background accent */}
       <div
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0 opacity-10"
         style={{
-          background: 'radial-gradient(circle at center, rgba(0, 230, 118, 0.1) 0%, transparent 70%)',
+          background: 'radial-gradient(circle at center, rgba(0, 230, 118, 0.2) 0%, transparent 70%)',
         }}
       />
 
       {/* Content container */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full px-6 gap-8">
-        {/* Title */}
-        <div className="text-center">
-          <h1
-            className="text-4xl font-bold mb-2"
-            style={{ color: '#F0F2F5', letterSpacing: '-0.02em' }}
-          >
-            Welcome to
-          </h1>
-          <h2
-            className="text-4xl font-bold"
-            style={{ color: '#00E676', letterSpacing: '-0.02em' }}
-          >
-            GigFlow
-          </h2>
-        </div>
-
-        {/* Loading animation section */}
-        <div className="flex flex-col items-center gap-8 w-full flex-1 justify-center">
-          {/* Scooter rider image with loading bar */}
-          <div className="relative w-full h-40 flex items-center justify-center">
-            {/* Loading track */}
-            <div
-              className="absolute w-full h-1 rounded-full"
-              style={{ background: '#1A1D23' }}
-            />
-
-            {/* Moving scooter image */}
-            <div
-              className="absolute transition-all duration-300 ease-out"
-              style={{
-                left: `${Math.max(0, progress - 10)}%`,
-                transform: 'translateX(-50%)',
-              }}
-            >
-              <img
-                src="/assets/images/scooter-rider.png"
-                alt="Scooter rider"
-                className="w-20 h-20 object-contain drop-shadow-lg"
-              />
-            </div>
-
-            {/* Loading progress bar */}
-            <div
-              className="absolute h-1 rounded-full transition-all duration-300"
-              style={{
-                width: `${progress}%`,
-                background: 'linear-gradient(90deg, #00E676, #00C853)',
-              }}
-            />
-          </div>
-
-          {/* Loading text */}
-          {isLoading && (
-            <div className="text-center">
-              <p className="text-sm" style={{ color: '#8B90A0' }}>
-                {progress < 30 && 'Loading your dashboard...'}
-                {progress >= 30 && progress < 60 && 'Setting up your profile...'}
-                {progress >= 60 && progress < 90 && 'Almost there...'}
-                {progress >= 90 && 'Ready to go!'}
-              </p>
-              <p
-                className="text-xs mt-2"
-                style={{ color: '#4A4F5C' }}
-              >
-                {Math.round(progress)}%
-              </p>
-            </div>
-          )}
-        </div>
-
-        {/* Get Started button */}
+      <div className="relative z-10 flex flex-col h-full px-6 pt-12">
+        {/* Get Started Button - Top of page */}
         {!isLoading && (
           <button
             onClick={handleGetStarted}
-            className="w-full py-4 rounded-xl font-semibold text-base transition-all active:scale-95 animate-fade-in"
+            className="w-full py-3 rounded-xl font-semibold text-base transition-all active:scale-95 animate-fade-in mb-8"
             style={{
               background: '#00E676',
               color: '#0D0F12',
@@ -130,6 +66,63 @@ export default function WelcomeScreen() {
             Let&apos;s get Started
           </button>
         )}
+
+        {/* Scooter Loading Animation - Center */}
+        <div className="flex-1 flex flex-col items-center justify-center gap-4">
+          {/* Loading track with animated scooter */}
+          <div className="relative w-full h-32 flex items-center justify-center">
+            {/* Dashed line track */}
+            <div
+              className="absolute w-full h-0.5"
+              style={{
+                background:
+                  'repeating-linear-gradient(90deg, #2A2D35 0px, #2A2D35 16px, transparent 16px, transparent 32px)',
+              }}
+            />
+
+            {/* Animated scooter image */}
+            <div
+              className="absolute transition-all duration-300 ease-out"
+              style={{
+                left: `${Math.min(scooterPosition, 100)}%`,
+                transform: 'translateX(-50%)',
+              }}
+            >
+              <img
+                src="/assets/images/scooter-loading.gif"
+                alt="Loading"
+                className="w-24 h-24 object-contain"
+                style={{
+                  filter: 'drop-shadow(0 4px 12px rgba(0, 230, 118, 0.2))',
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Progress percentage */}
+          {isLoading && (
+            <p className="text-sm font-medium" style={{ color: '#00E676' }}>
+              {Math.round(progress)}%
+            </p>
+          )}
+        </div>
+
+        {/* Welcome Text - Bottom section, professional */}
+        <div className="flex flex-col items-center justify-end pb-16 gap-3">
+          <p className="text-xs tracking-widest font-medium" style={{ color: '#8B90A0' }}>
+            YOUR FINANCIAL OS FOR GIG WORK
+          </p>
+          <h1
+            className="text-3xl font-bold text-center leading-tight"
+            style={{ color: '#F0F2F5' }}
+          >
+            Welcome to{' '}
+            <span style={{ color: '#00E676' }}>GigFlow</span>
+          </h1>
+          <p className="text-xs text-center mt-1" style={{ color: '#4A4F5C' }}>
+            Track earnings, maximize deductions, and manage taxes across all gig platforms.
+          </p>
+        </div>
       </div>
     </div>
   );
