@@ -121,8 +121,70 @@ html, body {
   padding-bottom: env(safe-area-inset-bottom, 16px);
 }
 
+.safe-top {
+  padding-top: env(safe-area-inset-top, 16px);
+}
+
+.safe-left {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+
+.safe-right {
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+.safe-all {
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+}
+
 .tab-bar-height {
   height: calc(64px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Mobile touch target optimization */
+@media (max-width: 640px) {
+  button, a[role="button"], [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  textarea,
+  select {
+    min-height: 44px;
+    font-size: 16px; /* Prevents zoom on iOS when focused */
+  }
+}
+
+/* Prevent unwanted zooming and selection on mobile */
+@media (max-width: 640px) {
+  html {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  body {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+
+  input, textarea, button, select, a {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
+
+/* Smooth scrolling for mobile */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent pull-to-refresh on Android */
+body {
+  overscroll-behavior-y: contain;
 }
 
 input[type="range"] {

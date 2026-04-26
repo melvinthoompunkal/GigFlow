@@ -52,18 +52,18 @@ export default function TabBar() {
             <button
               key={tab?.id}
               onClick={() => router?.push(tab?.route)}
-              className="flex flex-col items-center gap-1 py-2 px-4 rounded-xl transition-all duration-200 active:scale-95"
-              style={{ minWidth: 72 }}
+              className="flex flex-col items-center justify-center gap-1 py-3 px-4 rounded-xl transition-all duration-200 active:scale-95"
+              style={{ minWidth: 80, minHeight: 56 }}
               aria-label={tab?.label}
               aria-current={isActive ? 'page' : undefined}
             >
               <IconComponent
-                size={22}
+                size={24}
                 style={{ color: isActive ? '#00E676' : '#4A4F5C' }}
                 strokeWidth={isActive ? 2.5 : 1.5}
               />
               <span
-                className="text-xs font-medium"
+                className="text-xs font-medium leading-tight"
                 style={{
                   color: isActive ? '#00E676' : '#4A4F5C',
                   fontFamily: 'DM Sans, sans-serif',

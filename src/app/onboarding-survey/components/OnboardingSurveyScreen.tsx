@@ -86,7 +86,7 @@ export default function OnboardingSurveyScreen() {
   return (
     <div className="flex flex-col h-screen" style={{ background: '#0D0F12', maxWidth: 430, margin: '0 auto' }}>
       {/* Progress bar */}
-      <div className="px-5 pt-14 pb-4">
+      <div className="px-5 pt-12 pb-4 safe-top">
         <div className="flex items-center justify-between mb-3">
           <span className="text-xs" style={{ color: '#8B90A0', fontFamily: 'DM Sans, sans-serif' }}>
             Step {step + 1} of {TOTAL_STEPS}
@@ -234,7 +234,7 @@ function StepPlatforms({ platforms, onToggle }: { platforms: Platform[]; onToggl
             <button
               key={`platform-${p}`}
               onClick={() => onToggle(p)}
-              className="flex items-center gap-3 p-4 rounded-2xl transition-all active:scale-95"
+              className="flex items-center gap-3 p-4 rounded-2xl transition-all active:scale-95 min-h-16"
               style={{
                 background: selected ? 'rgba(0, 230, 118, 0.1)' : '#1A1D23',
                 border: selected ? '1px solid #00E676' : '1px solid #2A2D35',
