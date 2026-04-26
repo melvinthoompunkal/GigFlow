@@ -11,7 +11,7 @@ export default function RootPage() {
     if (profile?.isOnboarded || profile?.isDemoMode) {
       router?.replace('/income-dashboard');
     } else {
-      router?.replace('/onboarding-survey');
+      router?.replace('/welcome');
     }
   }, [profile?.isOnboarded, profile?.isDemoMode, router]);
 
