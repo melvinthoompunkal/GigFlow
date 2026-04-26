@@ -86,7 +86,7 @@ export default function OnboardingSurveyScreen() {
   return (
     <div className="flex flex-col h-screen" style={{ background: '#0D0F12', maxWidth: 430, margin: '0 auto' }}>
       {/* Progress bar */}
-      <div className="px-5 pt-12 pb-4 safe-top">
+      <div className="px-5 pt-14 pb-4">
         <div className="flex items-center justify-between mb-3">
           <span className="text-xs" style={{ color: '#8B90A0', fontFamily: 'DM Sans, sans-serif' }}>
             Step {step + 1} of {TOTAL_STEPS}
@@ -234,18 +234,14 @@ function StepPlatforms({ platforms, onToggle }: { platforms: Platform[]; onToggl
             <button
               key={`platform-${p}`}
               onClick={() => onToggle(p)}
-              className="flex items-center gap-3 p-4 rounded-2xl transition-all active:scale-95 min-h-16"
+              className="flex items-center gap-3 p-4 rounded-2xl transition-all active:scale-95"
               style={{
                 background: selected ? 'rgba(0, 230, 118, 0.1)' : '#1A1D23',
                 border: selected ? '1px solid #00E676' : '1px solid #2A2D35',
                 boxShadow: selected ? '0 0 12px rgba(0, 230, 118, 0.15)' : 'none',
               }}
             >
-              <img 
-                src={cfg.logo} 
-                alt={cfg.label}
-                className="w-8 h-8 object-contain"
-              />
+              <span className="text-2xl">{cfg.emoji}</span>
               <span className="text-sm font-medium" style={{ color: selected ? '#00E676' : '#F0F2F5' }}>
                 {cfg.label}
               </span>
@@ -596,13 +592,8 @@ function StepReview({ profile, platforms }: { profile: UserProfile['expenses'] &
           <p className="text-xs mb-2 uppercase tracking-wider" style={{ color: '#8B90A0' }}>Platforms</p>
           <div className="flex flex-wrap gap-2">
             {platforms.map((p: Platform) => (
-              <span key={`rev-plat-${p}`} className="text-xs px-3 py-1 rounded-full flex items-center gap-2" style={{ background: 'rgba(0,230,118,0.1)', color: '#00E676', border: '1px solid rgba(0,230,118,0.2)' }}>
-                <img 
-                  src={PLATFORM_CONFIG[p]?.logo} 
-                  alt={PLATFORM_CONFIG[p]?.label}
-                  className="w-4 h-4 object-contain"
-                />
-                {PLATFORM_CONFIG[p]?.label}
+              <span key={`rev-plat-${p}`} className="text-xs px-3 py-1 rounded-full" style={{ background: 'rgba(0,230,118,0.1)', color: '#00E676', border: '1px solid rgba(0,230,118,0.2)' }}>
+                {PLATFORM_CONFIG[p]?.emoji} {PLATFORM_CONFIG[p]?.label}
               </span>
             ))}
           </div>

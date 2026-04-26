@@ -63,7 +63,7 @@ export default function IncomeDashboardScreen() {
     <div className="flex flex-col h-screen overflow-hidden" style={{ background: '#0D0F12' }}>
       <div className="flex-1 overflow-y-auto scrollbar-hide pb-24">
         {/* Header */}
-        <div className="px-5 pt-12 pb-4 safe-top">
+        <div className="px-5 pt-14 pb-4">
           <div className="flex items-start justify-between">
             <div>
               <p className="text-xs uppercase tracking-widest mb-1" style={{ color: '#8B90A0', letterSpacing: '0.12em' }}>
@@ -86,18 +86,18 @@ export default function IncomeDashboardScreen() {
                 onClick={() => {
                   if (profile.isDemoMode) { resetProfile(); } else { activateDemoMode(); }
                 }}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs transition-all active:scale-95 min-h-10"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs transition-all"
                 style={{
                   background: profile.isDemoMode ? 'rgba(0,230,118,0.1)' : '#1A1D23',
                   border: profile.isDemoMode ? '1px solid #00E676' : '1px solid #2A2D35',
                   color: profile.isDemoMode ? '#00E676' : '#8B90A0',
                 }}
               >
-                {profile.isDemoMode ? <ToggleRight size={16} /> : <ToggleLeft size={16} />}
+                {profile.isDemoMode ? <ToggleRight size={14} /> : <ToggleLeft size={14} />}
                 Demo
               </button>
-              <button className="w-11 h-11 rounded-full flex items-center justify-center transition-all active:scale-95" style={{ background: '#1A1D23', border: '1px solid #2A2D35' }}>
-                <Bell size={20} color="#8B90A0" />
+              <button className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background: '#1A1D23', border: '1px solid #2A2D35' }}>
+                <Bell size={18} color="#8B90A0" />
               </button>
             </div>
           </div>
@@ -280,11 +280,7 @@ function PlatformCard({ platform, cfg, monthly, share, trend }: {
       style={{ width: 140, background: '#1A1D23', border: '1px solid #2A2D35' }}
     >
       <div className="flex items-center gap-2 mb-3">
-        <img 
-          src={cfg.logo} 
-          alt={cfg.label}
-          className="w-5 h-5 object-contain"
-        />
+        <span className="text-lg">{cfg.emoji}</span>
         <span className="text-xs font-medium" style={{ color: '#F0F2F5' }}>{cfg.label}</span>
       </div>
       <p className="font-mono font-bold text-base mb-1" style={{ color: '#F0F2F5', fontFamily: 'DM Mono, monospace' }}>
