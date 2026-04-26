@@ -280,7 +280,11 @@ function PlatformCard({ platform, cfg, monthly, share, trend }: {
       style={{ width: 140, background: '#1A1D23', border: '1px solid #2A2D35' }}
     >
       <div className="flex items-center gap-2 mb-3">
-        <span className="text-lg">{cfg.emoji}</span>
+        <img 
+          src={cfg.logo} 
+          alt={cfg.label}
+          className="w-5 h-5 object-contain"
+        />
         <span className="text-xs font-medium" style={{ color: '#F0F2F5' }}>{cfg.label}</span>
       </div>
       <p className="font-mono font-bold text-base mb-1" style={{ color: '#F0F2F5', fontFamily: 'DM Mono, monospace' }}>

@@ -1,16 +1,16 @@
 import type { Platform, VehicleType } from '../context/UserProfileContext';
 
-export const PLATFORM_CONFIG: Record<Platform, { label: string; color: string; emoji: string; bgColor: string }> = {
-  uber: { label: 'Uber', color: '#FFFFFF', emoji: '🚗', bgColor: '#000000' },
-  lyft: { label: 'Lyft', color: '#FF00BF', emoji: '🩷', bgColor: '#1A0A1A' },
-  doordash: { label: 'DoorDash', color: '#FF3008', emoji: '🍕', bgColor: '#1A0A08' },
-  instacart: { label: 'Instacart', color: '#43B02A', emoji: '🛒', bgColor: '#0A1A0A' },
-  upwork: { label: 'Upwork', color: '#6FDA44', emoji: '💻', bgColor: '#0A1A08' },
-  fiverr: { label: 'Fiverr', color: '#1DBF73', emoji: '🎨', bgColor: '#081A10' },
-  amazon_flex: { label: 'Amazon Flex', color: '#FF9900', emoji: '📦', bgColor: '#1A1008' },
-  grubhub: { label: 'Grubhub', color: '#F63440', emoji: '🥡', bgColor: '#1A0808' },
-  taskrabbit: { label: 'TaskRabbit', color: '#5D8A3C', emoji: '🔧', bgColor: '#0A130A' },
-  rover: { label: 'Rover', color: '#15A800', emoji: '🐾', bgColor: '#081508' },
+export const PLATFORM_CONFIG: Record<Platform, { label: string; color: string; logo: string; bgColor: string }> = {
+  uber: { label: 'Uber', color: '#FFFFFF', logo: '/assets/logos/uber.jpg', bgColor: '#000000' },
+  lyft: { label: 'Lyft', color: '#FF00BF', logo: '/assets/logos/lyft.jpg', bgColor: '#1A0A1A' },
+  doordash: { label: 'DoorDash', color: '#FF3008', logo: '/assets/logos/doordash.jpg', bgColor: '#1A0A08' },
+  instacart: { label: 'Instacart', color: '#43B02A', logo: '/assets/logos/instacart.jpg', bgColor: '#0A1A0A' },
+  upwork: { label: 'Upwork', color: '#6FDA44', logo: '/assets/logos/upwork.jpg', bgColor: '#0A1A08' },
+  fiverr: { label: 'Fiverr', color: '#1DBF73', logo: '/assets/logos/fiverr.jpg', bgColor: '#081A10' },
+  amazon_flex: { label: 'Amazon Flex', color: '#FF9900', logo: '/assets/logos/amazon_flex.jpg', bgColor: '#1A1008' },
+  grubhub: { label: 'Grubhub', color: '#F63440', logo: '/assets/logos/grubhub.jpg', bgColor: '#1A0808' },
+  taskrabbit: { label: 'TaskRabbit', color: '#5D8A3C', logo: '/assets/logos/taskrabbit.jpg', bgColor: '#0A130A' },
+  rover: { label: 'Rover', color: '#15A800', logo: '/assets/logos/rover.jpg', bgColor: '#081508' },
 };
 
 export const VEHICLE_CONFIG: Record<VehicleType, { label: string; emoji: string; mileageRate: number }> = {

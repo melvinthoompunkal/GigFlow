@@ -241,7 +241,11 @@ function StepPlatforms({ platforms, onToggle }: { platforms: Platform[]; onToggl
                 boxShadow: selected ? '0 0 12px rgba(0, 230, 118, 0.15)' : 'none',
               }}
             >
-              <span className="text-2xl">{cfg.emoji}</span>
+              <img 
+                src={cfg.logo} 
+                alt={cfg.label}
+                className="w-8 h-8 object-contain"
+              />
               <span className="text-sm font-medium" style={{ color: selected ? '#00E676' : '#F0F2F5' }}>
                 {cfg.label}
               </span>
@@ -592,8 +596,13 @@ function StepReview({ profile, platforms }: { profile: UserProfile['expenses'] &
           <p className="text-xs mb-2 uppercase tracking-wider" style={{ color: '#8B90A0' }}>Platforms</p>
           <div className="flex flex-wrap gap-2">
             {platforms.map((p: Platform) => (
-              <span key={`rev-plat-${p}`} className="text-xs px-3 py-1 rounded-full" style={{ background: 'rgba(0,230,118,0.1)', color: '#00E676', border: '1px solid rgba(0,230,118,0.2)' }}>
-                {PLATFORM_CONFIG[p]?.emoji} {PLATFORM_CONFIG[p]?.label}
+              <span key={`rev-plat-${p}`} className="text-xs px-3 py-1 rounded-full flex items-center gap-2" style={{ background: 'rgba(0,230,118,0.1)', color: '#00E676', border: '1px solid rgba(0,230,118,0.2)' }}>
+                <img 
+                  src={PLATFORM_CONFIG[p]?.logo} 
+                  alt={PLATFORM_CONFIG[p]?.label}
+                  className="w-4 h-4 object-contain"
+                />
+                {PLATFORM_CONFIG[p]?.label}
               </span>
             ))}
           </div>
