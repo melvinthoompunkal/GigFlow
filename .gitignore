@@ -57,3 +57,6 @@ mobile/ios/Flutter/app.zip
 mobile/ios/Flutter/flutter_assets/
 mobile/ios/ServiceDefinitions.json
 mobile/ios/Runner/GeneratedPluginRegistrant.*
+
+# Environment variables
+.env*

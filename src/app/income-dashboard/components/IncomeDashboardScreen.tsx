@@ -2,10 +2,11 @@
 import React, { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Bell, ToggleLeft, ToggleRight, TrendingUp, TrendingDown, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Bell, ToggleLeft, ToggleRight, TrendingUp, TrendingDown, AlertCircle, CheckCircle2, Upload, FileDown, Loader2 } from 'lucide-react';
 import { useUserProfile } from '../../../context/UserProfileContext';
 import { generateMonthlyData, generatePlatformBreakdown, calculateTaxBreakdown, calculateTaxHealthScore } from '../../../utils/taxCalculations';
 import { PLATFORM_CONFIG, QUARTERLY_DEADLINES } from '../../../utils/constants';
+import { downloadTaxReport } from '../../../utils/claudeApi';
 import TabBar from '../../../components/TabBar';
 import EarningsChart from './EarningsChart';
 
@@ -13,6 +14,19 @@ export default function IncomeDashboardScreen() {
   const router = useRouter();
   const { profile, activateDemoMode, resetProfile } = useUserProfile();
   const [showDemoToast, setShowDemoToast] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownloadReport = async () => {
+    if (!profile.claudeAnalysis) return;
+    setIsDownloading(true);
+    try {
+      await downloadTaxReport(profile);
+    } catch {
+      // silently fail — report generation requires a valid analysis
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   const isReady = profile.isOnboarded || profile.isDemoMode;
 
@@ -95,6 +109,14 @@ export default function IncomeDashboardScreen() {
               >
                 {profile.isDemoMode ? <ToggleRight size={14} /> : <ToggleLeft size={14} />}
                 Demo
+              </button>
+              <button
+                onClick={() => router.push('/import')}
+                className="w-9 h-9 rounded-full flex items-center justify-center transition-all active:scale-95"
+                style={{ background: '#1A1D23', border: '1px solid #2A2D35' }}
+                title="Import earnings"
+              >
+                <Upload size={18} color="#8B90A0" />
               </button>
               <button className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background: '#1A1D23', border: '1px solid #2A2D35' }}>
                 <Bell size={18} color="#8B90A0" />
@@ -249,6 +271,31 @@ export default function IncomeDashboardScreen() {
             <span className="text-xs" style={{ color: '#8B90A0' }}>100</span>
           </div>
         </div>
+
+        {/* Download Report */}
+        {profile.claudeAnalysis && (
+          <div className="mx-5 mb-5">
+            <button
+              onClick={handleDownloadReport}
+              disabled={isDownloading}
+              className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all active:scale-95"
+              style={{ background: 'rgba(0,230,118,0.06)', border: '1px solid rgba(0,230,118,0.25)' }}
+            >
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(0,230,118,0.12)' }}>
+                {isDownloading ? <Loader2 size={18} color="#00E676" className="animate-spin" /> : <FileDown size={18} color="#00E676" />}
+              </div>
+              <div className="text-left">
+                <p className="text-sm font-semibold" style={{ color: '#F0F2F5' }}>
+                  {isDownloading ? 'Generating PDF...' : 'Download Tax Report'}
+                </p>
+                <p className="text-xs mt-0.5" style={{ color: '#8B90A0' }}>
+                  Full summary with deductions & roadmap
+                </p>
+              </div>
+              {!isDownloading && <FileDown size={16} color="#00E676" className="ml-auto" />}
+            </button>
+          </div>
+        )}
 
         {/* Quarterly timeline */}
         <div className="px-5 mb-6">

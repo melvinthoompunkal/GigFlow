@@ -3,20 +3,21 @@ import '../models/user_profile.dart';
 class PlatformConfig {
   final String label;
   final String emoji;
-  const PlatformConfig({required this.label, required this.emoji});
+  final String logoUrl;
+  const PlatformConfig({required this.label, required this.emoji, required this.logoUrl});
 }
 
 const Map<Platform, PlatformConfig> kPlatformConfig = {
-  Platform.uber: PlatformConfig(label: 'Uber', emoji: '🚗'),
-  Platform.lyft: PlatformConfig(label: 'Lyft', emoji: '🩷'),
-  Platform.doordash: PlatformConfig(label: 'DoorDash', emoji: '🍕'),
-  Platform.instacart: PlatformConfig(label: 'Instacart', emoji: '🛒'),
-  Platform.upwork: PlatformConfig(label: 'Upwork', emoji: '💻'),
-  Platform.fiverr: PlatformConfig(label: 'Fiverr', emoji: '🎨'),
-  Platform.amazonFlex: PlatformConfig(label: 'Amazon Flex', emoji: '📦'),
-  Platform.grubhub: PlatformConfig(label: 'Grubhub', emoji: '🥡'),
-  Platform.taskrabbit: PlatformConfig(label: 'TaskRabbit', emoji: '🔧'),
-  Platform.rover: PlatformConfig(label: 'Rover', emoji: '🐾'),
+  Platform.uber:        PlatformConfig(label: 'Uber',         emoji: '🚗', logoUrl: 'https://logo.clearbit.com/uber.com'),
+  Platform.lyft:        PlatformConfig(label: 'Lyft',         emoji: '🩷', logoUrl: 'https://logo.clearbit.com/lyft.com'),
+  Platform.doordash:    PlatformConfig(label: 'DoorDash',     emoji: '🍕', logoUrl: 'https://logo.clearbit.com/doordash.com'),
+  Platform.instacart:   PlatformConfig(label: 'Instacart',    emoji: '🛒', logoUrl: 'https://logo.clearbit.com/instacart.com'),
+  Platform.upwork:      PlatformConfig(label: 'Upwork',       emoji: '💻', logoUrl: 'https://logo.clearbit.com/upwork.com'),
+  Platform.fiverr:      PlatformConfig(label: 'Fiverr',       emoji: '🎨', logoUrl: 'https://logo.clearbit.com/fiverr.com'),
+  Platform.amazonFlex:  PlatformConfig(label: 'Amazon Flex',  emoji: '📦', logoUrl: 'https://logo.clearbit.com/amazon.com'),
+  Platform.grubhub:     PlatformConfig(label: 'Grubhub',      emoji: '🥡', logoUrl: 'https://logo.clearbit.com/grubhub.com'),
+  Platform.taskrabbit:  PlatformConfig(label: 'TaskRabbit',   emoji: '🔧', logoUrl: 'https://logo.clearbit.com/taskrabbit.com'),
+  Platform.rover:       PlatformConfig(label: 'Rover',        emoji: '🐾', logoUrl: 'https://logo.clearbit.com/rover.com'),
 };
 
 class VehicleConfig {
@@ -27,12 +28,12 @@ class VehicleConfig {
 }
 
 const Map<VehicleType, VehicleConfig> kVehicleConfig = {
-  VehicleType.car: VehicleConfig(label: 'Car', emoji: '🚗', mileageRate: 0.67),
-  VehicleType.suv: VehicleConfig(label: 'SUV', emoji: '🚙', mileageRate: 0.67),
-  VehicleType.truck: VehicleConfig(label: 'Truck', emoji: '🛻', mileageRate: 0.67),
+  VehicleType.car:        VehicleConfig(label: 'Car',        emoji: '🚗', mileageRate: 0.67),
+  VehicleType.suv:        VehicleConfig(label: 'SUV',        emoji: '🚙', mileageRate: 0.67),
+  VehicleType.truck:      VehicleConfig(label: 'Truck',      emoji: '🛻', mileageRate: 0.67),
   VehicleType.motorcycle: VehicleConfig(label: 'Motorcycle', emoji: '🏍️', mileageRate: 0.21),
-  VehicleType.bicycle: VehicleConfig(label: 'Bicycle', emoji: '🚲', mileageRate: 0.0),
-  VehicleType.none: VehicleConfig(label: 'No Vehicle', emoji: '🚶', mileageRate: 0.0),
+  VehicleType.bicycle:    VehicleConfig(label: 'Bicycle',    emoji: '🚲', mileageRate: 0.0),
+  VehicleType.none:       VehicleConfig(label: 'No Vehicle', emoji: '🚶', mileageRate: 0.0),
 };
 
 const List<Map<String, String>> kUsStates = [

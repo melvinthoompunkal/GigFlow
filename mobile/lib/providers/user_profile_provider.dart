@@ -34,11 +34,13 @@ const _fallbackAnalysis = ClaudeAnalysis(
 
 const _demoProfile = UserProfile(
   platforms: [Platform.uber, Platform.doordash, Platform.lyft],
+  platformEarnings: const {'uber': 1800, 'doordash': 1500, 'lyft': 900},
   monthlyEarnings: 4200,
   filingStatus: FilingStatus.single,
-  hasDependents: false,
+  dependentCount: 0,
   state: 'CA',
   housingType: HousingType.rent,
+  monthlyRent: 1400,
   hasHomeOffice: true,
   vehicleType: VehicleType.car,
   expenses: Expenses(gas: 280, phone: 65, insurance: 150, equipment: 40, health: 180),
@@ -65,6 +67,11 @@ class UserProfileProvider extends ChangeNotifier {
 
   void activateDemoMode() {
     _profile = _demoProfile;
+    notifyListeners();
+  }
+
+  void setIsBankConnected(bool value) {
+    _profile = _profile.copyWith(isBankConnected: value);
     notifyListeners();
   }
 

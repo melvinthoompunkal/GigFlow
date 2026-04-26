@@ -1,91 +1,163 @@
-# Next.js
+# GigFlow — Financial OS for Gig Workers
 
-A modern Next.js 15 application built with TypeScript and Tailwind CSS.
+GigFlow is a full-stack mobile + web application that helps gig economy workers manage taxes, track income, find deductions, and understand their finances. It combines a Flutter mobile app with a Next.js backend powered by Claude AI.
 
-## 🚀 Features
+---
 
-- **Next.js 15** - Latest version with improved performance and features
-- **React 19** - Latest React version with enhanced capabilities
-- **Tailwind CSS** - Utility-first CSS framework for rapid UI development
+## Features
 
-## 🛠️ Installation
+- **Income Dashboard** — YTD earnings, month-over-month trends, per-platform breakdown including custom jobs
+- **Tax Snapshot** — Real-time federal, state, and self-employment tax estimates using 2024 IRS brackets for all filing statuses
+- **Tax Optimizer** — Personalized deductions calculated from your actual profile (mileage, home office, phone, health insurance, SEP-IRA, QBI, and more)
+- **Spending Analysis** — Manual expense entry with live percentage breakdown chart, Plaid bank connection, or demo data
+- **AI Chat Advisor** — Conversational financial assistant powered by Claude, with full profile context
+- **Financial Analysis** — AI-generated deduction roadmap and tax strategy via Google Gemini
+- **PDF Tax Report** — Downloadable tax summary report
+- **Data Import** — CSV upload, Plaid bank sync, or manual entry
+- **Onboarding Survey** — 11-step profile builder covering platforms, per-platform earnings, filing status, dependents, state, housing, home office, vehicle, and expenses
+
+---
+
+## Tech Stack
+
+### Mobile (Flutter)
+| Package | Purpose |
+|---|---|
+| Flutter / Dart 3.5 | Mobile framework |
+| Provider | State management |
+| Google Fonts | Typography (DM Sans, DM Mono) |
+| fl_chart | Charts and data visualization |
+| http | Backend API communication |
+| file_picker | CSV file upload |
+| share_plus | PDF sharing |
+| path_provider | File system access |
+
+### Backend (Next.js)
+| Package | Purpose |
+|---|---|
+| Next.js 15 / React 19 | API routes and web layer |
+| TypeScript | Type safety |
+| Tailwind CSS | Styling |
+| Anthropic Claude (`claude-haiku-4-5-20251001`) | AI chat advisor |
+| Google Gemini (`gemini-2.0-flash`) | Financial analysis |
+| Plaid | Bank account connection |
+| pdf-lib | PDF tax report generation |
+| Recharts | Web charts |
+| Framer Motion | Animations |
+| Lucide React / Heroicons | Icons |
+| Sonner | Toast notifications |
+
+---
+
+## Project Structure
+
+```
+GigFlow/
+├── mobile/                        # Flutter mobile app
+│   └── lib/
+│       ├── models/                # UserProfile, Deduction, TaxEstimate, etc.
+│       ├── providers/             # UserProfileProvider (state)
+│       ├── screens/
+│       │   ├── dashboard/         # Income dashboard
+│       │   ├── deductions/        # Tax optimizer & deduction cards
+│       │   ├── spending/          # Spending analysis
+│       │   ├── import/            # Data import (CSV, Plaid, manual)
+│       │   └── onboarding/        # 11-step survey
+│       ├── utils/
+│       │   ├── tax_calculations.dart   # Local tax engine (2024 IRS brackets)
+│       │   ├── backend_api.dart        # HTTP client for Next.js backend
+│       │   ├── claude_api.dart         # Chat + analysis API wrappers
+│       │   ├── colors.dart             # Design tokens
+│       │   └── constants.dart          # Platform configs, vehicle rates
+│       └── widgets/               # Shared UI components
+│
+├── src/                           # Next.js backend
+│   └── app/
+│       └── api/
+│           ├── chat/              # Claude chat endpoint
+│           ├── analyze/           # Gemini financial analysis endpoint
+│           ├── report/            # PDF generation endpoint
+│           └── parse-earnings/    # CSV parsing endpoint
+│
+├── package.json
+└── mobile/pubspec.yaml
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+- Node.js 18+
+- Flutter SDK 3.5+
+- Android emulator or physical device
+
+### Backend
 
 1. Install dependencies:
-  ```bash
-  npm install
-  # or
-  yarn install
-  ```
-
-2. Start the development server:
-  ```bash
-  npm run dev
-  # or
-  yarn dev
-  ```
-3. Open [http://localhost:4028](http://localhost:4028) with your browser to see the result.
-
-## 📁 Project Structure
-
-```
-nextjs/
-├── public/             # Static assets
-├── src/
-│   ├── app/            # App router components
-│   │   ├── layout.tsx  # Root layout component
-│   │   └── page.tsx    # Main page component
-│   ├── components/     # Reusable UI components
-│   ├── styles/         # Global styles and Tailwind configuration
-├── next.config.mjs     # Next.js configuration
-├── package.json        # Project dependencies and scripts
-├── postcss.config.js   # PostCSS configuration
-└── tailwind.config.js  # Tailwind CSS configuration
-
+```bash
+npm install
 ```
 
-## 🧩 Page Editing
+2. Create a `.env.local` file in the project root:
+```env
+ANTHROPIC_API_KEY=your_claude_api_key
+GEMINI_API_KEY=your_gemini_api_key
+PLAID_CLIENT_ID=your_plaid_client_id
+PLAID_SECRET=your_plaid_secret
+```
 
-You can start editing the page by modifying `src/app/page.tsx`. The page auto-updates as you edit the file.
+3. Start the dev server:
+```bash
+npm run dev
+```
 
-## 🎨 Styling
+The backend runs on `http://localhost:4028`.
 
-This project uses Tailwind CSS for styling with the following features:
-- Utility-first approach for rapid development
-- Custom theme configuration
-- Responsive design utilities
-- PostCSS and Autoprefixer integration
+### Mobile App
 
-## 📦 Available Scripts
+1. Install Flutter dependencies:
+```bash
+cd mobile
+flutter pub get
+```
 
-- `npm run dev` - Start development server on port 4028
-- `npm run build` - Build the application for production
-- `npm run start` - Start the development server
-- `npm run serve` - Start the production server
-- `npm run lint` - Run ESLint to check code quality
-- `npm run lint:fix` - Fix ESLint issues automatically
-- `npm run format` - Format code with Prettier
+2. Run on Android emulator (the app talks to `10.0.2.2:4028` which maps to your machine's localhost):
+```bash
+flutter run
+```
 
-## 📱 Deployment
+---
 
-Build the application for production:
+## API Endpoints
 
-  ```bash
-  npm run build
-  ```
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/chat` | Claude AI chat with profile context |
+| POST | `/api/analyze` | Gemini financial analysis (deductions + roadmap) |
+| POST | `/api/report` | Generate PDF tax report |
+| POST | `/api/parse-earnings` | Parse CSV earnings file |
 
-## 📚 Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Tax Engine
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial
+GigFlow calculates taxes locally using real 2024 IRS data — no AI guessing for core numbers:
 
-You can check out the [Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Federal tax** — All 7 progressive brackets (10%–37%) for single, married filing jointly, married filing separately, and head of household
+- **Self-employment tax** — 15.3% on 92.35% of net earnings
+- **State tax** — Flat and progressive rates for all 50 states (no-tax states return $0)
+- **Deductions** — Mileage (67¢/mile), home office (12% of rent), phone (85%), SE tax deduction, QBI (20%), health insurance, equipment, SEP-IRA (25% net, max $66k)
 
-## 🙏 Acknowledgments
+---
 
-- Built with [Rocket.new](https://rocket.new)
-- Powered by Next.js and React
-- Styled with Tailwind CSS
+## Scripts
 
-Built with ❤️ on Rocket.new
+```bash
+npm run dev          # Start backend dev server (port 4028)
+npm run build        # Production build
+npm run lint         # ESLint check
+npm run lint:fix     # Auto-fix lint issues
+npm run format       # Prettier format
+npm run type-check   # TypeScript check
+```

@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c//**)",
+      "Read(//c/src/flutter/bin/**)",
+      "PowerShell($currentPath = [System.Environment]::GetEnvironmentVariable\\(\"Path\", \"User\"\\); $newPath = $currentPath + \";C:\\\\src\\\\flutter\\\\bin\"; [System.Environment]::SetEnvironmentVariable\\(\"Path\", $newPath, \"User\"\\); Write-Output \"PATH updated\")",
+      "PowerShell($env:Path += \";C:\\\\src\\\\flutter\\\\bin\"; flutter --version)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Read(//c/Users/melvi/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.7/skills/subagent-driven-development/**)",
+      "Read(//c/Users/melvi/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.7/skills/requesting-code-review/**)",
+      "Bash(flutter pub *)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\melvi\\Downloads"
+    ]
+  }
+}

@@ -12,7 +12,7 @@ class Deduction {
   final String name;
   final String explanation;
   final int value;
-  final String eligibility; // 'high' | 'medium' | 'low'
+  final String eligibility;
   final String category;
 
   const Deduction({
@@ -69,7 +69,7 @@ class RoadmapStep {
   final String title;
   final String description;
   final String deadline;
-  final String priority; // 'high' | 'medium' | 'low'
+  final String priority;
   final bool completed;
 
   const RoadmapStep({
@@ -136,60 +136,81 @@ class Expenses {
 
 class UserProfile {
   final List<Platform> platforms;
+  final List<String> customPlatforms;
+  /// Maps Platform.name (e.g. 'uber') → monthly earnings in dollars.
+  final Map<String, int> platformEarnings;
+  /// Computed from platformEarnings; stored separately for CSV/demo paths.
   final int monthlyEarnings;
   final FilingStatus filingStatus;
-  final bool hasDependents;
+  final int dependentCount;
   final String state;
   final HousingType housingType;
+  /// Monthly rent or mortgage payment. Used for home office deduction.
+  final int monthlyRent;
   final bool hasHomeOffice;
   final VehicleType vehicleType;
   final Expenses expenses;
   final ClaudeAnalysis? claudeAnalysis;
   final bool isOnboarded;
   final bool isDemoMode;
+  final bool isBankConnected;
+
+  bool get hasDependents => dependentCount > 0;
 
   const UserProfile({
     this.platforms = const [],
+    this.customPlatforms = const [],
+    this.platformEarnings = const {},
     this.monthlyEarnings = 0,
     this.filingStatus = FilingStatus.single,
-    this.hasDependents = false,
+    this.dependentCount = 0,
     this.state = '',
     this.housingType = HousingType.rent,
+    this.monthlyRent = 0,
     this.hasHomeOffice = false,
     this.vehicleType = VehicleType.car,
     this.expenses = const Expenses(),
     this.claudeAnalysis,
     this.isOnboarded = false,
     this.isDemoMode = false,
+    this.isBankConnected = false,
   });
 
   UserProfile copyWith({
     List<Platform>? platforms,
+    List<String>? customPlatforms,
+    Map<String, int>? platformEarnings,
     int? monthlyEarnings,
     FilingStatus? filingStatus,
-    bool? hasDependents,
+    int? dependentCount,
     String? state,
     HousingType? housingType,
+    int? monthlyRent,
     bool? hasHomeOffice,
     VehicleType? vehicleType,
     Expenses? expenses,
     ClaudeAnalysis? claudeAnalysis,
     bool? isOnboarded,
     bool? isDemoMode,
+    bool? isBankConnected,
   }) {
     return UserProfile(
       platforms: platforms ?? this.platforms,
+      customPlatforms: customPlatforms ?? this.customPlatforms,
+      platformEarnings: platformEarnings ?? this.platformEarnings,
       monthlyEarnings: monthlyEarnings ?? this.monthlyEarnings,
       filingStatus: filingStatus ?? this.filingStatus,
-      hasDependents: hasDependents ?? this.hasDependents,
+      dependentCount: dependentCount ?? this.dependentCount,
       state: state ?? this.state,
       housingType: housingType ?? this.housingType,
+      monthlyRent: monthlyRent ?? this.monthlyRent,
       hasHomeOffice: hasHomeOffice ?? this.hasHomeOffice,
       vehicleType: vehicleType ?? this.vehicleType,
       expenses: expenses ?? this.expenses,
       claudeAnalysis: claudeAnalysis ?? this.claudeAnalysis,
       isOnboarded: isOnboarded ?? this.isOnboarded,
       isDemoMode: isDemoMode ?? this.isDemoMode,
+      isBankConnected: isBankConnected ?? this.isBankConnected,
     );
   }
 }

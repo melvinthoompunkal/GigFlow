@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../providers/user_profile_provider.dart';
 import '../../utils/claude_api.dart';
+import '../../utils/colors.dart';
 import '../../widgets/app_tab_bar.dart';
 
 class _Message {
@@ -120,12 +121,12 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0F12),
+      backgroundColor: kBg,
       body: Column(
         children: [
           // Header
           Container(
-            decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Color(0xFF2A2D35)))),
+            decoration: const BoxDecoration(color: kCard, border: Border(bottom: BorderSide(color: kBorder))),
             child: SafeArea(
               bottom: false,
               child: Padding(
@@ -136,28 +137,33 @@ class _ChatScreenState extends State<ChatScreen> {
                       onTap: () => Navigator.pushReplacementNamed(context, '/income-dashboard'),
                       child: Container(
                         width: 36, height: 36,
-                        decoration: BoxDecoration(shape: BoxShape.circle, color: const Color(0xFF1A1D23), border: Border.all(color: const Color(0xFF2A2D35))),
-                        child: const Icon(Icons.arrow_back_rounded, color: Color(0xFF8B90A0), size: 18),
+                        decoration: BoxDecoration(shape: BoxShape.circle, color: kCardAlt, border: Border.all(color: kBorder)),
+                        child: const Icon(Icons.arrow_back_rounded, color: kTextSecondary, size: 18),
                       ),
                     ),
                     const SizedBox(width: 12),
                     Container(
                       width: 36, height: 36,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(colors: [Color(0xFF00C853), Color(0xFF00E676)]),
-                      ),
+                      decoration: const BoxDecoration(shape: BoxShape.circle, color: kGreen),
                       child: const Center(child: Text('💰', style: TextStyle(fontSize: 16))),
                     ),
                     const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('GigFlow AI', style: GoogleFonts.dmSans(color: const Color(0xFFF0F2F5), fontSize: 14, fontWeight: FontWeight.w600)),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(text: 'gig', style: GoogleFonts.dmSans(color: kTextPrimary, fontSize: 14, fontWeight: FontWeight.bold)),
+                              TextSpan(text: 'Flow', style: GoogleFonts.dmSans(color: kGreen, fontSize: 14, fontWeight: FontWeight.bold)),
+                              TextSpan(text: ' AI', style: GoogleFonts.dmSans(color: kTextSecondary, fontSize: 14, fontWeight: FontWeight.w400)),
+                            ],
+                          ),
+                        ),
                         Row(children: [
-                          Container(width: 6, height: 6, decoration: const BoxDecoration(color: Color(0xFF00E676), shape: BoxShape.circle)),
+                          Container(width: 6, height: 6, decoration: const BoxDecoration(color: kGreen, shape: BoxShape.circle)),
                           const SizedBox(width: 4),
-                          Text('Online', style: GoogleFonts.dmSans(color: const Color(0xFF00E676), fontSize: 12)),
+                          Text('Online', style: GoogleFonts.dmSans(color: kGreen, fontSize: 12)),
                         ]),
                       ],
                     ),
@@ -185,7 +191,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
           // Input bar
           Container(
-            decoration: const BoxDecoration(border: Border(top: BorderSide(color: Color(0xFF2A2D35)))),
+            decoration: const BoxDecoration(color: kCard, border: Border(top: BorderSide(color: kBorder))),
             child: SafeArea(
               top: false,
               child: Padding(
@@ -196,16 +202,16 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF1A1D23),
+                          color: kCardAlt,
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: const Color(0xFF2A2D35)),
+                          border: Border.all(color: kBorder),
                         ),
                         child: TextField(
                           controller: _controller,
-                          style: GoogleFonts.dmSans(color: const Color(0xFFF0F2F5), fontSize: 14),
+                          style: GoogleFonts.dmSans(color: kTextPrimary, fontSize: 14),
                           decoration: InputDecoration(
                             hintText: 'Ask about taxes, deductions, savings...',
-                            hintStyle: GoogleFonts.dmSans(color: const Color(0xFF4A4F5C), fontSize: 14),
+                            hintStyle: GoogleFonts.dmSans(color: kTextMuted, fontSize: 14),
                             border: InputBorder.none,
                             isDense: true,
                             contentPadding: EdgeInsets.zero,
@@ -226,14 +232,11 @@ class _ChatScreenState extends State<ChatScreen> {
                             duration: const Duration(milliseconds: 200),
                             width: 40, height: 40,
                             decoration: BoxDecoration(
-                              gradient: hasText && !_isStreaming
-                                  ? const LinearGradient(colors: [Color(0xFF00C853), Color(0xFF00E676)])
-                                  : null,
-                              color: hasText && !_isStreaming ? null : const Color(0xFF2A2D35),
+                              color: hasText && !_isStreaming ? kGreen : kBorder,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Icon(Icons.send_rounded,
-                              color: hasText && !_isStreaming ? const Color(0xFF0D0F12) : const Color(0xFF4A4F5C),
+                              color: hasText && !_isStreaming ? Colors.white : kTextMuted,
                               size: 18),
                           ),
                         );
@@ -263,10 +266,7 @@ class _ChatScreenState extends State<ChatScreen> {
           if (!msg.isUser) ...[
             Container(
               width: 28, height: 28,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(colors: [Color(0xFF00C853), Color(0xFF00E676)]),
-              ),
+              decoration: const BoxDecoration(shape: BoxShape.circle, color: kGreen),
               child: const Center(child: Text('💰', style: TextStyle(fontSize: 12))),
             ),
             const SizedBox(width: 8),
@@ -279,15 +279,15 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   decoration: BoxDecoration(
-                    gradient: msg.isUser ? const LinearGradient(colors: [Color(0xFF00C853), Color(0xFF00E676)]) : null,
-                    color: msg.isUser ? null : const Color(0xFF1A1D23),
+                    color: msg.isUser ? kGreen : kCard,
                     borderRadius: BorderRadius.only(
                       topLeft: const Radius.circular(16),
                       topRight: const Radius.circular(16),
                       bottomLeft: msg.isUser ? const Radius.circular(16) : const Radius.circular(4),
                       bottomRight: msg.isUser ? const Radius.circular(4) : const Radius.circular(16),
                     ),
-                    border: msg.isUser ? null : Border.all(color: const Color(0xFF2A2D35)),
+                    border: msg.isUser ? null : Border.all(color: kBorder),
+                    boxShadow: msg.isUser ? null : [const BoxShadow(color: Color(0x06000000), blurRadius: 6, offset: Offset(0, 2))],
                   ),
                   child: msg.content.isEmpty && isStreaming
                       ? _TypingIndicator()
@@ -298,23 +298,20 @@ class _ChatScreenState extends State<ChatScreen> {
                             Flexible(child: Text(
                               msg.content,
                               style: GoogleFonts.dmSans(
-                                color: msg.isUser ? const Color(0xFF0D0F12) : const Color(0xFFF0F2F5),
+                                color: msg.isUser ? Colors.white : kTextPrimary,
                                 fontSize: 14, height: 1.5,
                               ),
                             )),
                             if (isStreaming && msg.content.isNotEmpty) ...[
                               const SizedBox(width: 2),
-                              Container(
-                                width: 2, height: 14,
-                                color: const Color(0xFF00E676),
-                              ),
+                              Container(width: 2, height: 14, color: kGreen),
                             ],
                           ],
                         ),
                 ),
               ),
               const SizedBox(height: 4),
-              Text(_formatTime(msg.timestamp), style: GoogleFonts.dmSans(color: const Color(0xFF4A4F5C), fontSize: 11)),
+              Text(_formatTime(msg.timestamp), style: GoogleFonts.dmSans(color: kTextMuted, fontSize: 11)),
             ],
           ),
         ],
@@ -328,7 +325,7 @@ class _ChatScreenState extends State<ChatScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Suggested questions:', style: GoogleFonts.dmSans(color: const Color(0xFF8B90A0), fontSize: 12)),
+          Text('Suggested questions:', style: GoogleFonts.dmSans(color: kTextSecondary, fontSize: 12)),
           const SizedBox(height: 10),
           Wrap(
             spacing: 8, runSpacing: 8,
@@ -337,11 +334,11 @@ class _ChatScreenState extends State<ChatScreen> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1A1D23),
+                  color: kCard,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFF2A2D35)),
+                  border: Border.all(color: kBorder),
                 ),
-                child: Text(prompt, style: GoogleFonts.dmSans(color: const Color(0xFF8B90A0), fontSize: 12, fontWeight: FontWeight.w500)),
+                child: Text(prompt, style: GoogleFonts.dmSans(color: kTextSecondary, fontSize: 12, fontWeight: FontWeight.w500)),
               ),
             )).toList(),
           ),
@@ -391,7 +388,7 @@ class _TypingIndicatorState extends State<_TypingIndicator> with TickerProviderS
             opacity: 0.3 + _controllers[i].value * 0.7,
             child: Container(
               width: 8, height: 8,
-              decoration: const BoxDecoration(color: Color(0xFF8B90A0), shape: BoxShape.circle),
+              decoration: const BoxDecoration(color: kGreen, shape: BoxShape.circle),
             ),
           ),
         ),

@@ -1,30 +1,38 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:provider/provider.dart';
 import 'package:gigflow/main.dart';
+import 'package:gigflow/providers/user_profile_provider.dart';
+import 'package:gigflow/utils/backend_api.dart';
+import 'package:gigflow/screens/import/import_screen.dart';
+import 'package:gigflow/screens/spending/spending_analysis_screen.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('App smoke test', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      ChangeNotifierProvider(
+        create: (_) => UserProfileProvider(),
+        child: const GigFlowApp(),
+      ),
+    );
+    expect(find.byType(MaterialApp), findsOneWidget);
+  });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  test('BackendException message is readable', () {
+    const e = BackendException('test error');
+    expect(e.toString(), 'test error');
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  testWidgets('ImportScreen shows 4 option cards', (tester) async {
+    await tester.pumpWidget(
+      ChangeNotifierProvider(
+        create: (_) => UserProfileProvider(),
+        child: const MaterialApp(home: ImportScreen()),
+      ),
+    );
+    expect(find.text('Connect to Bank'), findsOneWidget);
+    expect(find.text('Demo Mode'), findsOneWidget);
+    expect(find.text('Enter Manually'), findsOneWidget);
+    expect(find.text('Upload CSV'), findsOneWidget);
   });
 }
